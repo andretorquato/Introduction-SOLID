@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "API Users",
-    "description": "API Users",
+    "description": "Criação de usuários",
     "contact": {
       "name": "André Torquato",
       "email": "ats.torquato1@gmail.com"
@@ -11,10 +11,106 @@
   },
   "paths": {
     "/users": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Criar um novo usuário",
+        "description": "Criar um novo usuário",
+        "requestBody": {
+          "description": "Campos obrigatórios para a de um usuário.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "name": "André T.",
+                "email": "ats.torquato1@gmail.com"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Operação realizada com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "admin": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "André T."
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "ats.torquato1@gmail.com"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "example": "2021-09-04T19:51:35.207Z"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "example":"2021-09-04T19:51:35.207Z"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "get": {
-        "tags": ["Users"],
+        "tags": ["users"],
         "summary": "Get all users",
-        "description": "Get all users"
+        "description": "Get all users if you are an administrator",
+        "headers": {
+          "description": "admin user id",
+          "schema": {
+            "type": "string"
+          }
+        },
+        "response": {
+          "200": {
+            "description": "return all users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "admin": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
