@@ -69,13 +69,30 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Email já está sendo utilizado.",
+            "content":{
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "This email already in use."
+                    }
+                  }
+                }
+              }
+            }
+
           }
         }
       },
       "get": {
         "tags": ["users"],
-        "summary": "Get all users",
-        "description": "Get all users if you are an administrator",
+        "summary": "Retornar todos os usuários",
+        "description": "Somente usuário `admin` pode acessar.",
         "headers": {
           "description": "admin user id",
           "schema": {
