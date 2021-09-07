@@ -26,7 +26,8 @@
                     "type": "string"
                   },
                   "email": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "email"
                   }
                 }
               },
@@ -92,15 +93,21 @@
         "tags": ["users"],
         "summary": "Retornar todos os usuários",
         "description": "Somente usuário `admin` pode acessar.",
-        "headers": {
-          "description": "admin user id",
+        "parameters": [{
+          "name": "user_id",
           "schema": {
-            "type": "string"
-          }
-        },
-        "response": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "in": "header",
+          "required": true,
+          "allowEmptyValue": false,
+          "style": "header -simple"
+        }
+      ],
+        "responses": {
           "200": {
-            "description": "return all users",
+            "description": "Operação realizada com sucesso.",
             "content": {
               "application/json": {
                 "schema": {
@@ -109,17 +116,44 @@
                     "type": "object",
                     "properties": {
                       "id": {
-                        "type": "string"
+                        "type": "string",
+                        "format": "uuid"
                       },
                       "name": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "André Torquato"
                       },
                       "email": {
-                        "type": "string"
+                        "type": "string",
+                        "format": "email"
                       },
                       "admin": {
                         "type": "boolean"
+                      },
+                      "created_at":{
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "updated_at":{
+                        "type": "string",
+                        "format": "date-time"
                       }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Usuário sem permissão ou Usuário não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "You need to be permission an administrator to list all users."
                     }
                   }
                 }
