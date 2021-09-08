@@ -9,6 +9,8 @@
     },
     "version": "3.0.0"
   },
+  "tags": [{ "name": "users", "description": "Gerenciamento de usuários" }],
+
   "paths": {
     "/users": {
       "post": {
@@ -93,18 +95,19 @@
         "tags": ["users"],
         "summary": "Retornar todos os usuários",
         "description": "Somente usuário `admin` pode acessar.",
-        "parameters": [{
-          "name": "user_id",
-          "schema": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "in": "header",
-          "required": true,
-          "allowEmptyValue": false,
-          "style": "header -simple"
-        }
-      ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "in": "header",
+            "required": true,
+            "allowEmptyValue": false,
+            "style": "header -simple"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Operação realizada com sucesso.",
@@ -130,11 +133,11 @@
                       "admin": {
                         "type": "boolean"
                       },
-                      "created_at":{
+                      "created_at": {
                         "type": "string",
                         "format": "date-time"
                       },
-                      "updated_at":{
+                      "updated_at": {
                         "type": "string",
                         "format": "date-time"
                       }
@@ -154,6 +157,76 @@
                     "error": {
                       "type": "string",
                       "example": "You need to be permission an administrator to list all users."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": ["users"],
+        "summary": "Retornar um usuário especifico.",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "ID do usuário.",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação realizada com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "André Torquato"
+                      },
+                      "email": {
+                        "type": "string",
+                        "format": "email"
+                      },
+                      "admin": {
+                        "type": "boolean"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuário não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "User not found."
                     }
                   }
                 }
